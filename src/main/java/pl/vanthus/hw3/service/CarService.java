@@ -49,4 +49,8 @@ public class CarService {
         return carList.add(car);
     }
 
+    public void deleteCar(Car car){
+        carList.remove(car);
+    }
+
 }
