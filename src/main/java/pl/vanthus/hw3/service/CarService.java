@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,7 +25,7 @@ public class CarService {
 
     }
 
-    public List<Car>getAllCars(){
+    public List<Car> getAllCars(){
         return carList;
     }
 
@@ -34,8 +35,14 @@ public class CarService {
                 .filter(c -> c.getId() == id)
                 .findFirst();
 
-
         return car;
+    }
+
+    public List<Car> getCarsByColor(String color){
+
+        return carList.stream()
+                .filter(car -> color.equalsIgnoreCase(car.getColor().name()))
+                .collect(Collectors.toList());
     }
 
 }
