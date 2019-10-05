@@ -1,5 +1,6 @@
 package pl.vanthus.hw3.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.vanthus.hw3.model.Car;
 import pl.vanthus.hw3.service.CarService;
@@ -12,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping("/cars")
+@RequestMapping(value = "/cars",
+                produces = {MediaType.APPLICATION_JSON_VALUE,
+                            MediaType.APPLICATION_XML_VALUE})
 public class CarController {
 
     CarService carService;
