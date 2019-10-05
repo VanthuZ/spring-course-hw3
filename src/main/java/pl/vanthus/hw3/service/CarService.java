@@ -45,4 +45,8 @@ public class CarService {
                 .collect(Collectors.toList());
     }
 
+    public boolean addCar(Car car){
+        return carList.add(car);
+    }
+
 }
