@@ -1,10 +1,10 @@
-package model;
+package pl.vanthus.hw3.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import model.enums.Color;
+import pl.vanthus.hw3.model.enums.Color;
 
 @Data
 @AllArgsConstructor
