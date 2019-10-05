@@ -73,6 +73,20 @@ public class CarController {
         }else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity modCarById(@PathVariable long id, @RequestBody Car newCar){
+
+        Optional<Car> oldCar = carService.findById(id);
+
+        if(oldCar.isPresent()){
+            carService.modifyCar(oldCar.get(), newCar);
+            return new ResponseEntity(HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
 
     }
 

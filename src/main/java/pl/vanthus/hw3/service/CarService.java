@@ -53,4 +53,25 @@ public class CarService {
         carList.remove(car);
     }
 
+    public void modifyCar(Car oldCar, Car newCar){
+
+        if(oldCar.getId() != newCar.getId() & newCar.getId()!=0){
+            oldCar.setId(newCar.getId());
+        }
+
+        if(!oldCar.getMark().equals(newCar.getMark()) & newCar.getMark() != null){
+            oldCar.setMark(newCar.getMark());
+        }
+
+        if(!oldCar.getModel().equals(newCar.getModel()) & newCar.getModel() != null){
+            oldCar.setModel(newCar.getModel());
+        }
+
+        if(oldCar.getColor() != newCar.getColor() & newCar.getColor() != null){
+            oldCar.setColor(newCar.getColor());
+        }
+    }
+
+
+
 }
