@@ -6,6 +6,14 @@ target/
 .mvn
 mvnw
 mvnw.cmd
+node_modules
+build
+config
+package-lock.json
+package.json
+webpack.config.js
+webpack.generated.js
+
 
 ### STS ###
 .apt_generated
