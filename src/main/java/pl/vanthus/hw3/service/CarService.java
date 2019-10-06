@@ -25,6 +25,10 @@ public class CarService {
 
     }
 
+    public long getNextAvailableId(){
+        return carList.size() + 1;
+    }
+
     public List<Car> getAllCars(){
         return carList;
     }
