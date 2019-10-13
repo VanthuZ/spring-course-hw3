@@ -45,6 +45,12 @@
             <artifactId>vaadin-spring-boot-starter</artifactId>
             <version>14.0.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+            <version>1.2.2.RELEASE</version>
+        </dependency>
+
 
     </dependencies>
 
