@@ -36,7 +36,7 @@ public class CarService {
     public Optional<Car> findById(long id){
 
         Optional<Car> car = carList.stream()
-                .filter(c -> c.getId() == id)
+                .filter(c -> c.getCarId() == id)
                 .findFirst();
 
         return car;
@@ -59,8 +59,8 @@ public class CarService {
 
     public void modifyCar(Car oldCar, Car newCar){
 
-        if(oldCar.getId() != newCar.getId() & newCar.getId()!=0){
-            oldCar.setId(newCar.getId());
+        if(oldCar.getCarId() != newCar.getCarId() & newCar.getCarId()!=0){
+            oldCar.setCarId(newCar.getCarId());
         }
 
         if(!oldCar.getMark().equals(newCar.getMark()) & newCar.getMark() != null){

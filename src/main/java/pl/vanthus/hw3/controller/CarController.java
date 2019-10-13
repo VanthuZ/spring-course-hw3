@@ -1,7 +1,11 @@
 package pl.vanthus.hw3.controller;
 
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import pl.vanthus.hw3.model.Car;
 import pl.vanthus.hw3.service.CarService;
 
@@ -12,10 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+
 @RestController
-@RequestMapping(value = "/cars",
-                produces = {MediaType.APPLICATION_JSON_VALUE,
-                            MediaType.APPLICATION_XML_VALUE})
+@RequestMapping(value = "/cars", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class CarController {
 
     CarService carService;
@@ -27,31 +32,43 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> getCars(){
-        return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
+    public ResponseEntity< Resources<Car>> getCars(){
+
+        List<Car> allCars = carService.getAllCars();
+        allCars.forEach(car -> car.add(linkTo(CarController.class).slash(car.getCarId()).withSelfRel()));
+        Link link = linkTo(CarController.class).withSelfRel();
+        Resources<Car> carResources = new Resources<>(allCars, link);
+
+        return new ResponseEntity<>(carResources, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable long id){
+    public ResponseEntity<Resource<Car>> getCarById(@PathVariable long id){
 
         Optional<Car> car = carService.findById(id);
 
         if(car.isPresent()){
-            return new ResponseEntity<>(car.get(), HttpStatus.OK);
+            Link link = linkTo(CarController.class).slash(id).withSelfRel();
+            Resource<Car> carResource = new Resource<>(car.get(), link);
+            return new ResponseEntity<>(carResource, HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping(params = "color")
-    public ResponseEntity<List<Car>> getCarsByColor(@RequestParam String color){
+    public ResponseEntity<Resources<Car>> getCarsByColor(@RequestParam String color){
 
        List<Car> carList = carService.getCarsByColor(color);
+       carList.forEach(car -> car.add(linkTo(CarController.class).slash(car.getCarId()).withSelfRel()));
+       carList.forEach(car -> car.add(linkTo(CarController.class).withRel("allColors")));
+       Link link = linkTo(CarController.class).withSelfRel();
+       Resources<Car> carResources = new Resources<>(carList, link);
 
        if(carList.isEmpty()){
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }else{
-           return new ResponseEntity<>(carList, HttpStatus.OK);
+           return new ResponseEntity<>(carResources, HttpStatus.OK);
        }
     }
 
